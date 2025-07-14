@@ -1,4 +1,4 @@
-name: XClaim
+name: XClaim-SpawnOnly
 version: '${project.version}'
 main: codes.wasabi.xclaim.XClaim
 api-version: 1.13

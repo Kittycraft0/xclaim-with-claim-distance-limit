@@ -22,7 +22,7 @@
 language = "en-US"
 
 # The time (in seconds) until a player is considered a Veteran.
-veteran-time = 604800
+veteran-time = 1800
 
 # Disables the warning that prints to console when using Spigot where Paper is available.
 no-paper-nag = false
@@ -36,7 +36,7 @@ enabled = true
 interval = 300
 
 # Makes auto-saves complete silently.
-silent = false
+silent = true
 
 
 [editor]
@@ -72,30 +72,31 @@ dialog = "ACTION_BAR"
 # 0 : No rule.
 # 1 : Claims must be adjacent
 # 2 : Claims must be adjacent or diagonal
-placement = 2
+placement = 1
 
 # The minimum distance (in chunks) between claimed chunks owned by different players.
 min-distance = 0
 
 # The distance in chunks away from spawn that people can claim within.
 # Set to 0 or less to disable this feature.
-spawn-claim-radius = 16 # Or whatever value you want
+spawn-claim-radius = 16
 
 # If true, server operators (ops) will ignore the spawn-claim-radius restriction.
-exempt-ops-from-spawn-restriction = true
+exempt-ops-from-spawn-restriction = false
 
 # If true, the whitelist below will be used to exempt players from the spawn-claim-radius restriction.
 use-spawn-restriction-whitelist = false
 spawn-restriction-whitelist = [
     # "add-player-uuids-here-in-quotes",
     # "for-example: 069a79f4-44e9-4726-a5be-fca90e38aaf5"
+    "20104482-a1d0-4dde-aaad-748bd8919bdf" #iwbmo
 ]
 
 # Exempts claim owners from rules set inside their own claims. Probably shouldn't touch this.
 exempt-owner = true
 
 # Maximum chunks (in total) that a player can claim. Set to -1 for no limit.
-max-chunks = 20
+max-chunks = 6
 # Example using permissions (xclaim.group.test):
 # max-chunks = { default = 20, test = 40 }
 
@@ -105,7 +106,7 @@ max-claims = 5
 # max-claims = { default = 5, test = 10 }
 
 # Maximum claims (per world) that a player can have. Set to -1 for no limit.
-max-claims-in-world = -1
+max-claims-in-world = 2
 # Example using permissions (xclaim.group.test):
 # max-claims-in-world = { default = 2, test = -1 }
 
@@ -115,7 +116,7 @@ max-claims-in-world = -1
 enabled = true
 
 # The name for the area inside the spawn-claim-radius.
-inside-name = "The City"
+inside-name = "Spawn"
 
 # The message format for entering the spawn-claim-radius area. $1 will be replaced with inside-name.
 enter-message = "<gray>Now entering <green>$1</green></gray>"
