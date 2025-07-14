@@ -341,7 +341,7 @@ public class Claim {
     }
 
     public @Nullable World getWorld() {
-        if (!chunks.isEmpty()) {
+        if (chunks.size() > 0) {
             return chunks.iterator().next().world;
         }
         return null;
@@ -356,24 +356,8 @@ public class Claim {
     }
 
     public boolean addChunk(@NotNull Chunk chunk) throws IllegalArgumentException {
-        // START: Added spawn radius check
-        int radius = XClaim.mainConfig.rules().spawnClaimRadius();
-        if (radius > 0) {
-            World world = chunk.getWorld();
-            Location spawnLocation = world.getSpawnLocation();
-            Chunk spawnChunk = spawnLocation.getChunk();
-            int spawnX = spawnChunk.getX();
-            int spawnZ = spawnChunk.getZ();
-            int chunkX = chunk.getX();
-            int chunkZ = chunk.getZ();
-            if (Math.abs(chunkX - spawnX) > radius || Math.abs(chunkZ - spawnZ) > radius) {
-                throw new IllegalArgumentException(XClaim.lang.get("error.claim-too-far-from-spawn"));
-            }
-        }
-        // END: Added spawn radius check
-
         boolean claim = false;
-        if (!chunks.isEmpty()) {
+        if (chunks.size() > 0) {
             World w = chunks.iterator().next().world;
             if (w != chunk.getWorld()) throw new IllegalArgumentException("New chunks must be in the same world as previous chunks!");
         } else {
@@ -428,7 +412,7 @@ public class Claim {
         }
         if (ret) {
             generateBounds();
-            if (manageHandlers && chunks.isEmpty()) unclaim();
+            if (manageHandlers && chunks.size() < 1) unclaim();
         }
         return ret;
     }
@@ -447,9 +431,9 @@ public class Claim {
         return false;
     }
 
-    //public boolean containsChunk(@NotNull ChunkReference cr) {
-    //    return this.chunks.contains(cr);
-    //}
+    public boolean containsChunk(@NotNull ChunkReference cr) {
+        return this.chunks.contains(cr);
+    }
 
     public long minSquareDistance(@NotNull ChunkReference cr) {
         if (this.chunks.contains(cr)) return 0L;
@@ -498,7 +482,7 @@ public class Claim {
             playerPerms.put(uuid, set);
         } else {
             set.remove(permission);
-            if (!set.isEmpty()) {
+            if (set.size() > 0) {
                 playerPerms.put(uuid, set);
             } else {
                 playerPerms.remove(uuid);

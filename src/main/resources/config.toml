@@ -79,7 +79,17 @@ min-distance = 0
 
 # The distance in chunks away from spawn that people can claim within.
 # Set to 0 or less to disable this feature.
-spawn-claim-radius = 0
+spawn-claim-radius = 16 # Or whatever value you want
+
+# If true, server operators (ops) will ignore the spawn-claim-radius restriction.
+exempt-ops-from-spawn-restriction = true
+
+# If true, the whitelist below will be used to exempt players from the spawn-claim-radius restriction.
+use-spawn-restriction-whitelist = false
+spawn-restriction-whitelist = [
+    # "add-player-uuids-here-in-quotes",
+    # "for-example: 069a79f4-44e9-4726-a5be-fca90e38aaf5"
+]
 
 # Exempts claim owners from rules set inside their own claims. Probably shouldn't touch this.
 exempt-owner = true

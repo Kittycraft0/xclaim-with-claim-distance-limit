@@ -134,6 +134,10 @@ public final class NewClaimGuiSpec implements GuiSpec {
             Platform.getAdventure().player(ply).sendMessage(XClaim.lang.getComponent("chunk-editor-min-distance-deny"));
             return;
         }
+        if (ChunkEditor.violatesSpawnBoundaryCheck(ply, chunk)) {
+            Platform.getAdventure().player(ply).sendMessage(XClaim.lang.getComponent("error.claim-too-far-from-spawn"));
+            return;
+        }
         final String name = this.nextClaimName();
         Claim newClaim = new Claim(name, Collections.singleton(chunk), ply);
         if (!XClaimEvent.dispatch(new XClaimCreateClaimEvent(ply, newClaim))) return;

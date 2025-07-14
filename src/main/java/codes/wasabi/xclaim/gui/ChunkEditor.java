@@ -184,6 +184,13 @@ public class ChunkEditor {
                             Platform.getAdventure().player(ply).sendMessage(XClaim.lang.getComponent("chunk-editor-min-distance-deny"));
                             break;
                         }
+
+                        // ADD THIS BLOCK
+                        if (violatesSpawnBoundaryCheck(ply, chunk)) {
+                            Platform.getAdventure().player(ply).sendMessage(XClaim.lang.getComponent("error.claim-too-far-from-spawn"));
+                            break;
+                        }
+
                         final RulesConfig.PlacementRule placementRule = XClaim.mainConfig.rules().placement();
                         if (placementRule != RulesConfig.PlacementRule.NONE) {
                             boolean diagonals = placementRule == RulesConfig.PlacementRule.NEIGHBOR;
@@ -560,4 +567,31 @@ public class ChunkEditor {
         return false;
     }
 
+    public static boolean violatesSpawnBoundaryCheck(Player ply, Chunk chunk) {
+        RulesConfig rules = XClaim.mainConfig.rules();
+        int radius = rules.spawnClaimRadius();
+        if (radius <= 0) return false;
+
+        if (rules.exemptOpsFromSpawnRestriction() && ply.isOp()) {
+            return false;
+        }
+
+        if (rules.useSpawnRestrictionWhitelist()) {
+            List<String> whitelist = rules.spawnRestrictionWhitelist();
+            if (whitelist != null && whitelist.contains(ply.getUniqueId().toString())) {
+                return false;
+            }
+        }
+
+        World world = chunk.getWorld();
+        Location spawnLocation = world.getSpawnLocation();
+        Chunk spawnChunk = spawnLocation.getChunk();
+
+        int spawnX = spawnChunk.getX();
+        int spawnZ = spawnChunk.getZ();
+        int chunkX = chunk.getX();
+        int chunkZ = chunk.getZ();
+
+        return Math.abs(chunkX - spawnX) > radius || Math.abs(chunkZ - spawnZ) > radius;
+    }
 }

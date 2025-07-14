@@ -5,6 +5,7 @@ import org.bukkit.permissions.Permissible;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
+import java.util.List;
 
 public interface RulesConfig extends Config {
 
@@ -27,6 +28,12 @@ public interface RulesConfig extends Config {
     @UnknownNullability Integer maxClaimsInWorld(@Nullable Permissible target);
 
     @UnknownNullability Integer spawnClaimRadius();
+
+    @UnknownNullability Boolean exemptOpsFromSpawnRestriction();
+
+    @UnknownNullability Boolean useSpawnRestrictionWhitelist();
+
+    @UnknownNullability List<String> spawnRestrictionWhitelist();
 
     //
 
