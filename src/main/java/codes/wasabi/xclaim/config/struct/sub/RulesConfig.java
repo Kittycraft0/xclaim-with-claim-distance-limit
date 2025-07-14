@@ -35,6 +35,8 @@ public interface RulesConfig extends Config {
 
     @UnknownNullability List<String> spawnRestrictionWhitelist();
 
+    SpawnBoundaryConfig spawnBoundary();
+
     //
 
     enum PlacementRule {

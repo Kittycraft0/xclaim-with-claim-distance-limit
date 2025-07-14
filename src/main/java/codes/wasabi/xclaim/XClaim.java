@@ -446,7 +446,7 @@ public final class XClaim extends JavaPlugin {
     public static class Lang {
 
         private static final Pattern pattern = Pattern.compile("(\\$\\d+)");
-        private static final MiniMessage mm = MiniMessage.miniMessage();
+        public static final MiniMessage mm = MiniMessage.miniMessage();
         private static final MiniMessage strict = MiniMessage
                 .builder()
                 .strict(true)

@@ -3,6 +3,7 @@ package codes.wasabi.xclaim.config.impl.yaml.sub;
 import codes.wasabi.xclaim.config.impl.yaml.YamlConfig;
 import codes.wasabi.xclaim.config.impl.yaml.helpers.YamlLimits;
 import codes.wasabi.xclaim.config.struct.sub.RulesConfig;
+import codes.wasabi.xclaim.config.struct.sub.SpawnBoundaryConfig;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.permissions.Permissible;
 import org.jetbrains.annotations.NotNull;
@@ -33,19 +34,16 @@ public final class YamlRulesConfig extends YamlConfig implements RulesConfig {
 
     @Override
     public @UnknownNullability Integer maxChunks(@Nullable Permissible target) {
-        // Corrected: Return null to allow DefaultingRulesConfig to handle it.
         return null;
     }
 
     @Override
     public @UnknownNullability Integer maxClaims(@Nullable Permissible target) {
-        // Corrected: Return null to allow DefaultingRulesConfig to handle it.
         return null;
     }
 
     @Override
     public @UnknownNullability Integer maxClaimsInWorld(@Nullable Permissible target) {
-        // Corrected: Return null to allow DefaultingRulesConfig to handle it.
         return null;
     }
 
@@ -67,6 +65,13 @@ public final class YamlRulesConfig extends YamlConfig implements RulesConfig {
     @Override
     public @UnknownNullability List<String> spawnRestrictionWhitelist() {
         return this.section.getStringList("spawn-restriction-whitelist");
+    }
+
+    @Override
+    public SpawnBoundaryConfig spawnBoundary() {
+        ConfigurationSection section = this.section.getConfigurationSection("spawn-boundary");
+        if (section == null) section = this.section.createSection("spawn-boundary");
+        return new YamlSpawnBoundaryConfig(section);
     }
 
 }

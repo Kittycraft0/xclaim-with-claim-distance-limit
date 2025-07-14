@@ -110,6 +110,20 @@ max-claims-in-world = -1
 # max-claims-in-world = { default = 2, test = -1 }
 
 
+[rules.spawn-boundary]
+# If true, players will see a message when they cross the spawn-claim-radius boundary.
+enabled = true
+
+# The name for the area inside the spawn-claim-radius.
+inside-name = "The City"
+
+# The message format for entering the spawn-claim-radius area. $1 will be replaced with inside-name.
+enter-message = "<gray>Now entering <green>$1</green></gray>"
+
+# The message format for leaving the spawn-claim-radius area. $1 will be replaced with inside-name.
+leave-message = "<gray>Now leaving <red>$1</red></gray>"
+
+
 [worlds]
 # If a claim exists in a blacklisted world, the owner has this much time before it is removed (seconds)
 grace-time = 604800

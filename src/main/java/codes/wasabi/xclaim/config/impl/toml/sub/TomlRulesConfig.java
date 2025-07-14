@@ -4,8 +4,10 @@ import codes.wasabi.xclaim.config.impl.toml.TomlConfig;
 import codes.wasabi.xclaim.config.impl.toml.helpers.TomlGroupableValue;
 import codes.wasabi.xclaim.config.struct.helpers.ConfigComparators;
 import codes.wasabi.xclaim.config.struct.sub.RulesConfig;
+import codes.wasabi.xclaim.config.struct.sub.SpawnBoundaryConfig;
 import com.moandjiezana.toml.Toml;
 import org.bukkit.permissions.Permissible;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
 import java.util.Collections;
@@ -17,12 +19,14 @@ public final class TomlRulesConfig extends TomlConfig implements RulesConfig {
     private final TomlGroupableValue.Int maxChunks;
     private final TomlGroupableValue.Int maxClaims;
     private final TomlGroupableValue.Int maxClaimsInWorld;
+    private final SpawnBoundaryConfig spawnBoundary;
     public TomlRulesConfig(@Nullable Toml table) {
         super(table);
         this.table = table;
         this.maxChunks = new TomlGroupableValue.Int(table, "max-chunks", ConfigComparators.INT_NATURAL_OR_INF);
         this.maxClaims = new TomlGroupableValue.Int(table, "max-claims", ConfigComparators.INT_NATURAL_OR_INF);
         this.maxClaimsInWorld = new TomlGroupableValue.Int(table, "max-claims-in-world", ConfigComparators.INT_NATURAL_OR_INF);
+        this.spawnBoundary = new TomlSpawnBoundaryConfig(table != null ? table.getTable("spawn-boundary") : null);
     }
 
     @Override
@@ -75,6 +79,11 @@ public final class TomlRulesConfig extends TomlConfig implements RulesConfig {
         if (this.table == null) return Collections.emptyList();
         // This is the corrected line:
         return this.table.getList("spawn-restriction-whitelist", Collections.emptyList());
+    }
+
+    @Override
+    public @NotNull SpawnBoundaryConfig spawnBoundary() {
+        return spawnBoundary;
     }
 
 }

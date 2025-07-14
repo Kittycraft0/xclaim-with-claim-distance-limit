@@ -48,40 +48,56 @@ public class MovementRoutine implements Listener {
         Chunk fromChunk = from.getChunk();
         Chunk toChunk = to.getChunk();
 
-        // Only run logic if the player has actually moved to a new chunk
         if (fromChunk.getX() == toChunk.getX() && fromChunk.getZ() == toChunk.getZ()) {
             return;
         }
 
+        Player ply = event.getPlayer();
         Claim fromClaim = Claim.getByChunk(fromChunk);
         Claim toClaim = Claim.getByChunk(toChunk);
 
-        // If the claim status hasn't changed, do nothing
-        if (Objects.equals(fromClaim, toClaim)) {
-            return;
+        boolean claimMessageSent = false;
+        if (!Objects.equals(fromClaim, toClaim)) {
+            if (toClaim != null) {
+                XCPlayer claimOwner = toClaim.getOwner();
+                Component ownerName;
+                String n = claimOwner.getName();
+                if (n == null) n = XClaim.lang.get("unknown");
+                ownerName = Component.text(n);
+
+                Platform.get().sendActionBar(ply, XClaim.lang.getComponent(
+                        "move-enter",
+                        ownerName,
+                        Component.text(toClaim.getName())
+                ));
+            } else {
+                Platform.get().sendActionBar(ply, XClaim.lang.getComponent(
+                        "move-exit",
+                        fromClaim.getName()
+                ));
+            }
+            claimMessageSent = true;
         }
 
-        Player ply = event.getPlayer();
+        if (!claimMessageSent) {
+            codes.wasabi.xclaim.config.struct.sub.SpawnBoundaryConfig boundaryConfig = XClaim.mainConfig.rules().spawnBoundary();
+            if (boundaryConfig.enabled()) {
+                boolean wasInside = !codes.wasabi.xclaim.gui.ChunkEditor.violatesSpawnBoundaryCheck(ply, fromChunk);
+                boolean isInside = !codes.wasabi.xclaim.gui.ChunkEditor.violatesSpawnBoundaryCheck(ply, toChunk);
 
-        if (toClaim != null) {
-            // Player has entered a new claim
-            XCPlayer claimOwner = toClaim.getOwner();
-            Component ownerName;
-            String n = claimOwner.getName();
-            if (n == null) n = XClaim.lang.get("unknown");
-            ownerName = Component.text(n);
+                String message = null;
+                if (wasInside && !isInside) {
+                    message = boundaryConfig.leaveMessage().replace("$1", boundaryConfig.insideName());
+                } else if (!wasInside && isInside) {
+                    // This line was corrected
+                    message = boundaryConfig.enterMessage().replace("$1", boundaryConfig.insideName());
+                }
 
-            Platform.get().sendActionBar(ply, XClaim.lang.getComponent(
-                    "move-enter",
-                    ownerName,
-                    Component.text(toClaim.getName())
-            ));
-        } else {
-            // Player has left a claim and entered an unclaimed chunk (since toClaim is null and fromClaim was not)
-            Platform.get().sendActionBar(ply, XClaim.lang.getComponent(
-                    "move-exit",
-                    fromClaim.getName()
-            ));
+                if (message != null) {
+                    // This line was corrected to use the MiniMessage parser
+                    Platform.get().sendActionBar(ply, XClaim.Lang.mm.deserialize(message));
+                }
+            }
         }
     }
 

@@ -3,7 +3,7 @@ version: '${project.version}'
 main: codes.wasabi.xclaim.XClaim
 api-version: 1.13
 prefix: XC
-authors: [ WasabiThumbs ]
+authors: [ Kittycraft0/iwbmo, WasabiThumbs ]
 softdepend:
   - ClaimChunk
   - dynmap

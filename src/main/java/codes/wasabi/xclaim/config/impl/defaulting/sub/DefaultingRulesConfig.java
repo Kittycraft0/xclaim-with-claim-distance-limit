@@ -2,6 +2,7 @@ package codes.wasabi.xclaim.config.impl.defaulting.sub;
 
 import codes.wasabi.xclaim.config.impl.filter.sub.FilterRulesConfig;
 import codes.wasabi.xclaim.config.struct.sub.RulesConfig;
+import codes.wasabi.xclaim.config.struct.sub.SpawnBoundaryConfig;
 import org.bukkit.permissions.Permissible;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -10,8 +11,10 @@ import java.util.List;
 
 public final class DefaultingRulesConfig extends FilterRulesConfig {
 
+    private final SpawnBoundaryConfig spawnBoundary;
     public DefaultingRulesConfig(@NotNull RulesConfig backing) {
         super(backing);
+        this.spawnBoundary = new DefaultingSpawnBoundaryConfig(backing.spawnBoundary());
     }
 
     @Override
@@ -69,6 +72,11 @@ public final class DefaultingRulesConfig extends FilterRulesConfig {
         List<String> value = this.backing().spawnRestrictionWhitelist();
         if (value == null) return Collections.emptyList();
         return value;
+    }
+
+    @Override
+    public @NotNull SpawnBoundaryConfig spawnBoundary() {
+        return this.spawnBoundary;
     }
 
 }
