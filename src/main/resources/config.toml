@@ -77,6 +77,10 @@ placement = 2
 # The minimum distance (in chunks) between claimed chunks owned by different players.
 min-distance = 0
 
+# The distance in chunks away from spawn that people can claim within.
+# Set to 0 or less to disable this feature.
+spawn-claim-radius = 0
+
 # Exempts claim owners from rules set inside their own claims. Probably shouldn't touch this.
 exempt-owner = true
 

@@ -51,4 +51,9 @@ public final class TomlRulesConfig extends TomlConfig implements RulesConfig {
         return this.maxClaimsInWorld.get(target);
     }
 
+    @Override
+    public @UnknownNullability Integer spawnClaimRadius() {
+        return this.getInt("spawn-claim-radius");
+    }
+
 }

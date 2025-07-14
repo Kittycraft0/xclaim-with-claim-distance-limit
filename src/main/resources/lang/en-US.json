@@ -39,6 +39,7 @@
   "chunk-editor-min-distance-deny": "<red>* Cannot claim this close to another claim you do not have access to!</red>",
   "chunk-editor-adjacent": "<red>* Chunks in your claim must be next to each other!</red>",
   "chunk-editor-max": "<red>* You've reached your maximum number of chunks. Try deleting some.</red>",
+  "error.claim-too-far-from-spawn": "<red>* You cannot claim land this far from spawn.</red>",
   "chunk-editor-add": "<green>* Claimed chunk at</green> <b><gold>X</gold></b><white>=$1, </white><b><gold>Z</gold></b><white>=$2</white>",
   "chunk-editor-redundant-add": "<yellow>* This claim already contains this chunk.</yellow>",
   "chunk-editor-remove": "<green>Unclaimed chunk!</green>",

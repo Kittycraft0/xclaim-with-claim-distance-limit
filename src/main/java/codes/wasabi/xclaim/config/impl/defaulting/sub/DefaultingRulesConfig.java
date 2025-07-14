@@ -47,4 +47,9 @@ public final class DefaultingRulesConfig extends FilterRulesConfig {
         return this.nullFallback(this.backing().maxClaimsInWorld(target), -1);
     }
 
+    @Override
+    public @NotNull Integer spawnClaimRadius() {
+        return this.nullFallback(this.backing().spawnClaimRadius(), 0);
+    }
+
 }

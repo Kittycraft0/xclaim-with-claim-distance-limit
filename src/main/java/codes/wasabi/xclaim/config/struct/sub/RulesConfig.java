@@ -26,6 +26,8 @@ public interface RulesConfig extends Config {
 
     @UnknownNullability Integer maxClaimsInWorld(@Nullable Permissible target);
 
+    @UnknownNullability Integer spawnClaimRadius();
+
     //
 
     enum PlacementRule {
