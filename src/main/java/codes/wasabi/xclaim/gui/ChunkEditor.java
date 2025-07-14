@@ -381,39 +381,66 @@ public class ChunkEditor {
                 Chunk fromChunk = from.getChunk();
                 Chunk toChunk = to.getChunk();
                 if (toChunk.getX() != fromChunk.getX() || toChunk.getZ() != fromChunk.getZ()) {
-                    int ownState = 0;
+                    int ownState = 0; // 0=Open, 1=This Claim, 2=Own Other Claim, 3=Taken, 4=Too Far
                     String langUnknown = XClaim.lang.get("unknown");
                     String ownerName = langUnknown;
-                    if (editing.contains(to)) {
-                        ownState = 1;
+
+                    // First, check if the chunk is outside the spawn boundary
+                    if (violatesSpawnBoundaryCheck(ply, toChunk)) {
+                        ownState = 4;
                     } else {
-                        Claim cl = Claim.getByChunk(toChunk);
-                        if (cl != null) {
-                            XCPlayer xcp = cl.getOwner();
-                            ownerName = xcp.getName();
-                            if (ownerName == null) ownerName = langUnknown;
-                            ownState = (xcp.getUniqueId().equals(ply.getUniqueId()) ? 2 : 3);
+                        // If it's within the boundary, run the original logic
+                        if (editing.contains(to)) {
+                            ownState = 1;
+                        } else {
+                            Claim cl = Claim.getByChunk(toChunk);
+                            if (cl != null) {
+                                XCPlayer xcp = cl.getOwner();
+                                ownerName = xcp.getName();
+                                if (ownerName == null) ownerName = langUnknown;
+                                ownState = (xcp.getUniqueId().equals(ply.getUniqueId()) ? 2 : 3);
+                            }
                         }
                     }
+
                     Color color = Color.GRAY;
-                    String refer = XClaim.lang.get("chunk-editor-info-open");
-                    if (ownState == 1) {
-                        color = Color.GREEN;
-                        refer = XClaim.lang.get("chunk-editor-info-claimed");
-                    } else if (ownState == 2) {
-                        color = Color.YELLOW;
-                        refer = XClaim.lang.get("chunk-editor-info-owned");
-                    } else if (ownState == 3) {
-                        color = Color.RED;
-                        refer = XClaim.lang.get("chunk-editor-info-taken", ownerName);
+                    String refer = "";
+                    switch (ownState) {
+                        case 1:
+                            color = Color.GREEN;
+                            refer = XClaim.lang.get("chunk-editor-info-claimed");
+                            break;
+                        case 2:
+                            color = Color.YELLOW;
+                            refer = XClaim.lang.get("chunk-editor-info-owned");
+                            break;
+                        case 3:
+                            color = Color.RED;
+                            refer = XClaim.lang.get("chunk-editor-info-taken", ownerName);
+                            break;
+                        case 4:
+                            color = Color.MAROON;
+                            refer = XClaim.lang.get("chunk-editor-info-too-far");
+                            break;
+                        default:
+                            color = Color.GRAY;
+                            refer = XClaim.lang.get("chunk-editor-info-open");
+                            break;
                     }
+
                     TextColor tc = TextColor.color(color.asRGB());
                     Platform.getAdventure().player(ply).sendMessage(Component.empty()
                             .append(XClaim.lang.getComponent("chunk-editor-info", toChunk.getX(), toChunk.getZ()))
                             .append(Component.newline())
                             .append(Component.text(refer).color(tc))
                     );
-                    ply.playSound(ply.getLocation(), Platform.get().getExpSound(), 1f, 1f);
+
+                    if (ownState == 4) {
+                        ply.playSound(ply.getLocation(), Platform.get().getClickSound(), 0.5f, 0.5f);
+                    } else {
+                        ply.playSound(ply.getLocation(), Platform.get().getExpSound(), 1f, 1f);
+                    }
+
                     java.awt.Color awtColor = new java.awt.Color(color.asRGB());
                     World w = toChunk.getWorld();
                     double eyeY = to.getY() + ply.getEyeHeight();

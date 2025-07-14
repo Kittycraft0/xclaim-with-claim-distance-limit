@@ -49,6 +49,7 @@
   "chunk-editor-info-claimed": "Claimed",
   "chunk-editor-info-owned": "In a different claim you own",
   "chunk-editor-info-taken": "Taken by $1",
+  "chunk-editor-info-too-far": "Too far from spawn",
   "chunk-editor-claim": "<green>Claim</green>",
   "chunk-editor-unclaim": "<red>Unclaim</red>",
   "chunk-editor-quit": "<dark_red>Quit</dark_red>",
