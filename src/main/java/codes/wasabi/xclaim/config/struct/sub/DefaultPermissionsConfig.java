@@ -39,4 +39,6 @@ public interface DefaultPermissionsConfig extends Config {
 
     @UnknownNullability String delete();
 
+    @UnknownNullability String eat();
+
 }

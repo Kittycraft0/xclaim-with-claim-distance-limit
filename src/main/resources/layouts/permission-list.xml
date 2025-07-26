@@ -19,8 +19,9 @@
         <slot id="13"/> <!-- ENTITY_DAMAGE_MISC     -->
         <slot id="14"/> <!-- EXPLODE                -->
         <slot id="15"/> <!-- ITEM_DROP              -->
-        <slot id="16"/> <!-- MANAGE                 -->
-        <slot id="17"/> <!-- DELETE                 -->
+        <slot id="16"/> <!-- EAT                    -->
+        <slot id="17"/> <!-- MANAGE                 -->
+        <slot id="18"/> <!-- DELETE                 -->
     </row>
     <slot id="0" x="4" y="~"/> <!-- EXIT -->
 </layout>

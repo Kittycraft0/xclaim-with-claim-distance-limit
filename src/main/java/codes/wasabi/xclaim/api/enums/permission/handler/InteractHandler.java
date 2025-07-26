@@ -246,6 +246,16 @@ public class InteractHandler extends PermissionHandler {
         }
         if (mode != Mode.ALL && mode != Mode.FLAMMABLE) return;
         Player ply = event.getPlayer();
+
+        ItemStack itemInHand = event.getItem();
+        if (itemInHand != null) {
+            if (itemInHand.getType().isEdible()) {
+                if (getClaim().hasPermission(ply, Permission.EAT)) {
+                    return;
+                }
+            }
+        }
+
         if (mode == Mode.FLAMMABLE) {
             if (getClaim().hasPermission(ply, Permission.FIRE_USE)) return;
         }

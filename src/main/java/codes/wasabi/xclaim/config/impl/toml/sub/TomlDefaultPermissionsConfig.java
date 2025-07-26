@@ -96,4 +96,9 @@ public class TomlDefaultPermissionsConfig extends TomlConfig implements DefaultP
     public @UnknownNullability String delete() {
         return this.getString("delete");
     }
+
+    @Override
+    public @UnknownNullability String eat() {
+        return this.getString("eat");
+    }
 }

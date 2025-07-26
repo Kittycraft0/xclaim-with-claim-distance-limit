@@ -27,6 +27,7 @@ public enum Permission {
     ENTITY_DAMAGE_MISC("perm-entity-damage-misc-name", "perm-entity-damage-misc-description", DefaultPermissionsConfig::entDamageMisc, DamageHandler.Misc.class),
     EXPLODE("perm-explode-name", "perm-explode-description", DefaultPermissionsConfig::explode, ExplosionHandler.class),
     ITEM_DROP("perm-item-drop-name", "perm-item-drop-description", DefaultPermissionsConfig::itemDrop, DropHandler.class),
+    EAT("perm-eat-name", "perm-eat-description", DefaultPermissionsConfig::eat),
     MANAGE("perm-manage-name", "perm-manage-description", DefaultPermissionsConfig::manage),
     DELETE("perm-delete-name", "perm-delete-description", DefaultPermissionsConfig::delete);
 

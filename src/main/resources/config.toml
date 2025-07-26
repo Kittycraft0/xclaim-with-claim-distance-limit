@@ -210,6 +210,11 @@ item-drop = "ALL"
 # Drop items
 # DEFAULT: ALL
 
+eat = "VETERANS"
+# Allow players to eat food items and drink potions.
+# This acts as an override to the 'interact' permission.
+# DEFAULT: VETERANS
+
 manage = "NONE"
 # Modify the claim settings
 # DEFAULT: NONE
@@ -257,5 +262,3 @@ enabled = true
 
 # Reserved.
 debug = false
-
-

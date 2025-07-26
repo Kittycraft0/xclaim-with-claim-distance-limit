@@ -94,4 +94,9 @@ public final class YamlDefaultPermissionsConfig extends YamlConfig implements De
     public @UnknownNullability String delete() {
         return null;
     }
+
+    @Override
+    public @UnknownNullability String eat() {
+        return null;
+    }
 }

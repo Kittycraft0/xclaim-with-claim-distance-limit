@@ -95,4 +95,9 @@ public final class DefaultingDefaultPermissionsConfig extends FilterDefaultPermi
         return this.nullFallback(this.backing().delete(), "NONE");
     }
 
+    @Override
+    public @NotNull String eat() {
+        return this.nullFallback(this.backing().eat(), "VETERANS");
+    }
+
 }
